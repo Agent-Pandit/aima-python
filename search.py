@@ -928,7 +928,7 @@ def print_boggle(board):
     print()
 
 
-def boggle_neighbors(n2, cache={}):
+def boggle_neighbors(n2, cache=None):
     """Return a list of lists, where the i-th element is the list of indexes
     for the neighbors of square i."""
     if cache.get(n2):
@@ -1141,13 +1141,14 @@ class InstrumentedProblem(Problem):
                                                self.states, str(self.found)[:4])
 
 
-def compare_searchers(problems, header,
-                      searchers=[breadth_first_tree_search,
-                                 breadth_first_search,
-                                 depth_first_graph_search,
-                                 iterative_deepening_search,
-                                 depth_limited_search,
-                                 recursive_best_first_search]):
+def compare_searchers(problems, header, searchers=None):
+    if searchers is None:
+        searchers = [breadth_first_tree_search,
+                     breadth_first_search,
+                     depth_first_graph_search,
+                     iterative_deepening_search,
+                     depth_limited_search,
+                     recursive_best_first_search]
     def do(searcher, problem):
         p = InstrumentedProblem(problem)
         searcher(p)
